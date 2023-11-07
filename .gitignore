@@ -1,0 +1,4 @@
+# Project exclude paths
+/finance_web/target/
+/target/
+.idea
