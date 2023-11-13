@@ -5,8 +5,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.kaitaiming.finance.mapper.ExpenseMapper;
 import com.kaitaiming.finance.model.ExpenseDO;
+import com.kaitaiming.finance.po.ExpensePO;
 import com.kaitaiming.finance.service.ExpenseService;
+
+import cn.hutool.core.convert.Convert;
 
 /**
  * 报销单服务
@@ -14,31 +19,20 @@ import com.kaitaiming.finance.service.ExpenseService;
  * @author Administrator
  */
 @Component
-public class ExpenseServiceImpl implements ExpenseService {
+public class ExpenseServiceImpl extends ServiceImpl<ExpenseMapper, ExpensePO> implements ExpenseService {
 
     /**
-     * 创建报销单
+     * 保存报销单
      *
      * @param expenseDO 报销单信息
      * @return 新创建的报销单ID
      */
     @Override
-    public long createExpense(ExpenseDO expenseDO) {
+    public long saveExpense(ExpenseDO expenseDO) {
         // 实际操作中，创建报销单并返回新的报销单ID
-        return 12345; // 示例报销单ID
-    }
-
-    /**
-     * 编辑报销单
-     *
-     * @param expenseId 报销单ID
-     * @param updatedDescription 更新后的报销描述
-     * @return 更新后的报销单信息
-     */
-    @Override
-    public ExpenseDO editExpense(long expenseId, String updatedDescription) {
-        // 实际操作中，编辑指定ID的报销单并返回更新后的报销单信息
-        return null;
+        ExpensePO convert = Convert.convert(ExpensePO.class, expenseDO);
+        this.saveOrUpdate(convert);
+        return convert.getId();
     }
 
     /**
@@ -60,7 +54,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public ExpenseDO getExpense(long expenseId) {
         // 实际操作中，根据ID查询报销单信息
-        return new ExpenseDO(expenseId, "Travel Expenses", 500.0, "Business trip to client site", "Pending");
+        return null;
     }
 
     /**
@@ -72,7 +66,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public ExpenseDO approveExpense(long expenseId) {
         // 实际操作中，将指定ID的报销单标记为已审批
-        return new ExpenseDO(expenseId, "Travel Expenses", 500.0, "Business trip to client site", "Approved");
+        return null;
     }
 
     /**
@@ -94,6 +88,6 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public List<ExpenseDO> getExpensesByStatus(String status) {
         // 实际操作中，根据状态查询报销单列表
-        return new ArrayList<>(); // 示例空列表
+        return new ArrayList<>();
     }
 }

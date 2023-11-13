@@ -1,5 +1,10 @@
 package com.kaitaiming.finance.model;
 
+import java.util.Date;
+import java.util.List;
+
+import com.kaitaiming.finance.model.enums.ApprovalStatusEnum;
+
 import lombok.Data;
 
 /**
@@ -9,10 +14,16 @@ import lombok.Data;
  */
 @Data
 public class ExpenseDO {
+
     /**
      * 报销单ID
      */
-    private Long formId;
+    private Long id;
+
+    /**
+     * 报销人ID
+     */
+    private Long employeeId;
 
     /**
      * 报销人姓名
@@ -20,30 +31,113 @@ public class ExpenseDO {
     private String employeeName;
 
     /**
-     * 报销金额
+     * 报销类别
      */
-    private Double amount;
+    private Long category;
 
     /**
-     * 报销日期
+     * 付款方式
      */
-    private String expenseDate;
+    private Long paymentMethod;
 
     /**
-     * 报销单状态
+     * 报销方式
      */
-    private String status;
+    private Long reimbursementMethod;
 
     /**
-     * 报销单类型
+     * 部门代码
      */
-    private String type;
+    private String departmentCode;
 
     /**
      * 报销描述
      */
     private String description;
 
-    public ExpenseDO(long expenseId, String updated_expenseDO_type, double updatedAmount, String updatedDescription, String pending) {
+    /**
+     * 报销金额
+     */
+    private Double amount;
+
+    /**
+     * 报销单状态
+     */
+    private Integer status;
+
+    /**
+     * 创建日期
+     */
+    private Date createDate;
+
+    /**
+     * 报销日期
+     */
+    private Date expenseDate;
+
+    /**
+     * 申请日期
+     */
+    private Date applyDate;
+
+    /**
+     * 审批日期
+     */
+    private Date approvalDate;
+
+    /**
+     * 付款日期
+     */
+    private Date paymentDate;
+
+    /**
+     * 报销单附件文件地址
+     */
+    private List<String> fileUrls;
+
+    /**
+     * 报销明细
+     */
+    private List<ExpenseItemDO> expenseItemList;
+
+    /**
+     * 打款账户
+     */
+    private ExpenseAccountDO expenseAccount;
+
+    /**
+     * 创建报销单
+     */
+    public void create() {
+
+        this.expenseDate = new Date();
     }
+
+    /**
+     * 提交报销单
+     */
+    public void submit() {
+
+        this.applyDate = new Date();
+        this.status = ApprovalStatusEnum.PROGRESS.getCode();
+    }
+
+    /**
+     * 通过报销单
+     */
+    public void agree() {
+
+        this.approvalDate = new Date();
+        this.status = ApprovalStatusEnum.AGREE.getCode();
+    }
+
+    /**
+     * 退回报销单
+     */
+    public void refuse() {
+
+        this.approvalDate = new Date();
+        this.status = ApprovalStatusEnum.REFUSE.getCode();
+    }
+
 }

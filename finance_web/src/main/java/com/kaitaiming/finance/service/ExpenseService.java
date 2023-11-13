@@ -2,26 +2,19 @@ package com.kaitaiming.finance.service;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.kaitaiming.finance.model.ExpenseDO;
+import com.kaitaiming.finance.po.ExpensePO;
 
-public interface ExpenseService {
+public interface ExpenseService extends IService<ExpensePO> {
 
     /**
-     * 创建报销单
+     * 保存报销单
      *
      * @param expenseDO 报销单信息
      * @return 新创建的报销单ID
      */
-    long createExpense(ExpenseDO expenseDO);
-
-    /**
-     * 编辑报销单
-     *
-     * @param expenseId 报销单ID
-     * @param updatedDescription 更新后的报销描述
-     * @return 更新后的报销单信息
-     */
-    ExpenseDO editExpense(long expenseId, String updatedDescription);
+    long saveExpense(ExpenseDO expenseDO);
 
     /**
      * 提交报销单
